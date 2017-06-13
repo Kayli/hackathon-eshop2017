@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Fabric;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace PNI.EShop.Service.API
+namespace PNI.EShop.Web
 {
-    [EventSource(Name = "MyCompany-PNI.EShop.API-API")]
+    [EventSource(Name = "MyCompany-PNI.Services-UI")]
     internal sealed class ServiceEventSource : EventSource
     {
         public static readonly ServiceEventSource Current = new ServiceEventSource();

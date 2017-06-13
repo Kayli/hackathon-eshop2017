@@ -1,5 +1,5 @@
 @using System.Collections.Generic
-@model System.Collections.Generic.IEnumerable<PNI.EShop.UI.Models.ProductViewModel>
+@model System.Collections.Generic.IEnumerable<PNI.EShop.Web.Models.ProductViewModel>
 
 @{
     ViewData["Title"] = "Prodcuts";
@@ -18,7 +18,7 @@
     <tbody>
 @foreach (var item in Model) {
     <tr>
-        <td>@item.Name</td>
+        <td><a href="products/detail/@item.Id">@item.Name</a></td>
         <td>@item.Type</td>
         <td>@item.Color</td>
     </tr>

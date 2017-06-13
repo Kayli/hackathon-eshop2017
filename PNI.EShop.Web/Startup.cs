@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PNI.EShop.Core;
-using PNI.EShop.Infrastructure;
-using PNI.EShop.Core.Order;
 using PNI.EShop.Infrastructure.EventStore;
 
-namespace PNI.EShop.UI
+namespace PNI.EShop.Web
 {
     public class Startup
     {
