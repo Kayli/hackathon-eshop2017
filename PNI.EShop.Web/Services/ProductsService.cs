@@ -1,29 +1,40 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using PNI.EShop.Web.Models;
 
 namespace PNI.EShop.Web.Services
 {
     public class ProductsService : IProductsService
     {
-        private readonly ConcurrentBag<ProductViewModel> _products;
+        public async Task<ProductViewModel[]> ListOfAllProductsAsync(){
 
-        public ProductsService(IEnumerable<ProductViewModel> products)
-        {
-            _products = new ConcurrentBag<ProductViewModel>(products);
-        }
-        
-        public Task<ProductViewModel[]> ListOfAllProductsAsync(){
-            
-            return Task.FromResult(_products.ToArray());
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8889");
+
+                var response = await client.GetAsync(new Uri("/Products", UriKind.Relative));
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                var products = JsonConvert.DeserializeObject<ProductViewModel[]>(jsonResponse);
+
+                return products;
+            }
         }
 
-        public Task<ProductViewModel> ProductByIdAsync(Guid id)
+        public async Task<ProductViewModel> ProductByIdAsync(Guid id)
         {
-            return Task.FromResult(_products.FirstOrDefault(p => p.Id == id));
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8889");
+
+                var response = await client.GetAsync(new Uri($"Products/{id}", UriKind.Relative));
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<ProductViewModel>(jsonResponse);
+            }
         }
     }
 }

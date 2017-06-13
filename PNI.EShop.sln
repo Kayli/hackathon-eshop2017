@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PNI.EShop.Web", "PNI.EShop.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNI.EShop.Core", "PNI.EShop.Core\PNI.EShop.Core.csproj", "{D26808B8-2F2B-4F4C-B715-82D88D97A159}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNI.EShop.API", "PNI.EShop.API\PNI.EShop.API.csproj", "{7CAB9C4A-6C16-40F0-947C-DB2CE1DEBA95}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNI.EShop.Infrastructure", "PNI.EShop.Infrastructure\PNI.EShop.Infrastructure.csproj", "{D6276671-8C53-4C76-9363-B1D27CB90BE1}"
 EndProject
 Global
