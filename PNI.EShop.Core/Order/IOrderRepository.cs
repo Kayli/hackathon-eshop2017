@@ -1,4 +1,4 @@
-namespace PNI.EShop.Core
+namespace PNI.EShop.Core.Order
 {
     public interface IOrderRepository
     {
