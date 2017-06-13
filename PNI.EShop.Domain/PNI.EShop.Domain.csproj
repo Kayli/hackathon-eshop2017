@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj" />
+    <ProjectReference Include="..\PNI.DDD.Core\PNI.DDD.Core.csproj" />
   </ItemGroup>
 
 </Project>
