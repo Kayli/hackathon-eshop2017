@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BD94A392-7394-48FB-9DB9-CF7696BB4B2C}</ProjectGuid>
+    <ProjectGuid>{29A5400B-16E0-4164-9EB1-44ADA66AFF34}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PNI.EShop.Tests</RootNamespace>
