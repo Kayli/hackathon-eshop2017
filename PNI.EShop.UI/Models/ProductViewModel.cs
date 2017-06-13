@@ -4,11 +4,11 @@ namespace PNI.EShop.UI.Models
 {
     public class ProductViewModel
     {
-        private  ColorDefinition Color { get; set; }
-        private  ModelTypeDefinition Type { get; set; }
-        private  string Name { get; set; }
-        private  string FileRelativePath { get; set; }
-        private  string CreatedAt { get; set; }
-        private  string UpdatedAt { get; set; }
+        public ColorDefinition Color { get; set; }
+        public ModelTypeDefinition Type { get; set; }
+        public string Name { get; set; }
+        public string FileRelativePath { get; set; }
+        public string CreatedAt { get; set; }
+        public string UpdatedAt { get; set; }
     }
 }
