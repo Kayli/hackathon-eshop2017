@@ -1,9 +1,7 @@
 namespace PNI.EShop.Core
 {
-    public class OrderRepository
+    public interface IOrderRepository
     {
 
     }
-
-    
 }
