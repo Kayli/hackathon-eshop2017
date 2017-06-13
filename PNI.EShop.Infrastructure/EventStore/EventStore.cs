@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using PNI.EShop.Core._Common;
 using System.Linq;
-using Microsoft.Extensions.DependencyModel;
 
 namespace PNI.EShop.Infrastructure.EventStore
 {

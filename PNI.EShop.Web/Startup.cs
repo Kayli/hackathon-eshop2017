@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PNI.EShop.Core;
+using PNI.EShop.Core.Order;
+using PNI.EShop.Infrastructure;
 using PNI.EShop.Infrastructure.EventStore;
 
 namespace PNI.EShop.Web
