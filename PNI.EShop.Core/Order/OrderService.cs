@@ -1,7 +1,7 @@
 namespace PNI.EShop.Core
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
-        
+
     }
 }

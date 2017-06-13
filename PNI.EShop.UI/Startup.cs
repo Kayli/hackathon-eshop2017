@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PNI.EShop.Core;
+using PNI.EShop.Infrastructure;
 
 namespace PNI.EShop.UI
 {
@@ -27,6 +29,10 @@ namespace PNI.EShop.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //configure dependency injection
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderService, OrderService>();
+
             // Add framework services.
             services.AddMvc();
         }
