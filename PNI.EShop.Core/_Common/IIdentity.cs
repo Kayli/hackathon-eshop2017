@@ -1,4 +1,4 @@
-﻿namespace PNI.DDD.Core
+﻿namespace PNI.EShop.Core._Common
 {
     public interface IIdentity<out TId>
     {

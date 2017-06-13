@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Fabric;
 using System.Linq;
@@ -7,17 +8,24 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using PNI.EShop.Core.Product;
+using PNI.EShop.Core.Services;
+using PNI.EShop.Core._Common;
 
 namespace PNI.EShop.Service.ProductManager
 {
     /// <summary>
     /// An instance of this class is created for each service replica by the Service Fabric runtime.
     /// </summary>
-    internal sealed class ProductManager : StatefulService
+    internal sealed class ProductManager : StatefulService, IProductManagerService
     {
+        private readonly ConcurrentBag<Product> _products;
+
         public ProductManager(StatefulServiceContext context)
             : base(context)
-        { }
+        {
+            _products = new ConcurrentBag<Product>(CreateProducts());
+        }
 
         /// <summary>
         /// Optional override to create listeners (e.g., HTTP, Service Remoting, WCF, etc.) for this service replica to handle client or user requests.
@@ -63,6 +71,79 @@ namespace PNI.EShop.Service.ProductManager
 
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
             }
+        }
+
+        public IEnumerable<Product> RetrieveAllProducts()
+        {
+            return _products.ToArray();
+        }
+
+        public Product ProductById(ProductId id)
+        {
+            return _products.First(p => p.Id == id);
+        }
+
+        private static IEnumerable<Product> CreateProducts()
+        {
+            return new[]
+            {
+                new Product(
+                    new ProductId(Guid.Parse("89707fc0-1493-4899-a062-e37127ec497b")),
+                    new StringValue("Black Box"),
+                    new StringValue("A simple black box"),
+                    new ProductModel(
+                        new ColorValue(ColorDefinition.Black),
+                        new ModelType(ModelTypeDefinition.Box),
+                        new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                        new DateValue(DateTimeOffset.UtcNow)),
+                    new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                    new DateValue(DateTimeOffset.UtcNow)),
+                new Product(
+                    new ProductId(Guid.Parse("5a19ff97-8095-4d43-8d30-26751851a6fe")),
+                    new StringValue("White Box"),
+                    new StringValue("A simple white box"),
+                    new ProductModel(
+                        new ColorValue(ColorDefinition.White),
+                        new ModelType(ModelTypeDefinition.Box),
+                        new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                        new DateValue(DateTimeOffset.UtcNow)),
+                    new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                    new DateValue(DateTimeOffset.UtcNow)),
+                new Product(
+                    new ProductId(Guid.Parse("4b4480b3-e368-4f01-931c-67c52eee914a")),
+                    new StringValue("Red Cone"),
+                    new StringValue("A simple red cone"),
+                    new ProductModel(
+                        new ColorValue(ColorDefinition.Red),
+                        new ModelType(ModelTypeDefinition.Cone),
+                        new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                        new DateValue(DateTimeOffset.UtcNow)),
+                    new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                    new DateValue(DateTimeOffset.UtcNow)),
+                new Product(
+                    new ProductId(Guid.Parse("718e5ba7-b31c-4655-849b-880948d83cba")),
+                    new StringValue("Green Sphere"),
+                    new StringValue("A simple green sphere"),
+                    new ProductModel(
+                        new ColorValue(ColorDefinition.Green),
+                        new ModelType(ModelTypeDefinition.Sphere),
+                        new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                        new DateValue(DateTimeOffset.UtcNow)),
+                    new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                    new DateValue(DateTimeOffset.UtcNow)),
+                new Product(
+                    new ProductId(Guid.Parse("5803710e-92a9-4b08-8788-fccf8a9c8e4a")),
+                    new StringValue("Black Box"),
+                    new StringValue("A simple black box"),
+                    new ProductModel(
+                        new ColorValue(ColorDefinition.Red),
+                        new ModelType(ModelTypeDefinition.Box),
+                        new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                        new DateValue(DateTimeOffset.UtcNow)),
+                    new DateValue(DateTimeOffset.Parse("Jan 24, 1975 15:00z")),
+                    new DateValue(DateTimeOffset.UtcNow))
+            };
+
         }
     }
 }

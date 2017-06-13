@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
 using PNI.EShop.API.Models;
+using PNI.EShop.Core.Services;
+using PNI.EShop.Core._Common;
 
 namespace PNI.EShop.API.Controllers
 {
@@ -15,6 +18,10 @@ namespace PNI.EShop.API.Controllers
         [Route("")]
         public Task<ProductDto[]> Products()
         {
+            var service = ServiceProxy.Create<IProductManagerService>(new Uri("fabric:/pnimedia/ProductManagerType"));
+
+            var response = service.RetrieveAllProducts();
+
             return Task.FromResult(CreateProducts().ToArray());
         }
 

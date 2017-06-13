@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PNI.EShop.Core;
 using PNI.EShop.Core.Order;
+using PNI.EShop.Core._Common;
 using PNI.EShop.Infrastructure;
 using PNI.EShop.Infrastructure.EventStore;
 

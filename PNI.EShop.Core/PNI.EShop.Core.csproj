@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ServiceFabric.Services">
+      <HintPath>..\..\..\..\..\.nuget\packages\microsoft.servicefabric.services\2.3.311\lib\net45\Microsoft.ServiceFabric.Services.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,7 +48,15 @@
     <Compile Include="Order\IOrderRepository.cs" />
     <Compile Include="Order\IOrderService.cs" />
     <Compile Include="Order\OrderService.cs" />
+    <Compile Include="Product\ColorValue.cs" />
+    <Compile Include="Product\DateValue.cs" />
+    <Compile Include="Product\ProductModel.cs" />
+    <Compile Include="Product\ModelType.cs" />
+    <Compile Include="Product\Product.cs" />
+    <Compile Include="Product\ProductId.cs" />
+    <Compile Include="Product\StringValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IProductManagerService.cs" />
     <Compile Include="_Common\ColorDefinition.cs" />
     <Compile Include="_Common\Entity.cs" />
     <Compile Include="_Common\EShopException.cs" />
@@ -58,5 +69,6 @@
     <Compile Include="_Common\ModelTypeDefinition.cs" />
     <Compile Include="_Common\ValueObject.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
