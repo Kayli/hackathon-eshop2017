@@ -1,6 +1,6 @@
 namespace PNI.EShop.Core
 {
-    public interface IOrderService
+    public interface IOrderService : IEventHandler, IHandlesEvent<TestEvent>
     {
 
     }
