@@ -15,6 +15,10 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "PNI.EShop.API", "PNI.EShop.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNI.EShop.Service.API", "PNI.EShop.Service.API\PNI.EShop.Service.API.csproj", "{7714A3B3-1B41-44BC-B206-E402404AA716}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNI.EShop.Tests", "PNI.EShop.Tests\PNI.EShop.Tests.csproj", "{29A5400B-16E0-4164-9EB1-44ADA66AFF34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNI.EShop.Infrastructure", "PNI.EShop.Infrastructure\PNI.EShop.Infrastructure.csproj", "{AD3FE0E1-3846-4752-83D9-9A96BBF2F7D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
