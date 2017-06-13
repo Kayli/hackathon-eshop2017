@@ -18,9 +18,9 @@ namespace PNI.EShop.API.Controllers
         [Route("")]
         public Task<ProductDto[]> Products()
         {
-            var service = ServiceProxy.Create<IProductManagerService>(new Uri("fabric:/pnimedia/ProductManagerType"));
+            //var service = ServiceProxy.Create<IProductManagerService>(new Uri("fabric:/pnimedia/ProductManagerType"));
 
-            var response = service.RetrieveAllProducts();
+            //var response = service.RetrieveAllProducts();
 
             return Task.FromResult(CreateProducts().ToArray());
         }

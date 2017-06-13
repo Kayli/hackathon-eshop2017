@@ -12,7 +12,7 @@ using OpenQA.Selenium.Chrome;
 namespace PNI.EShop.Tests
 {
     [TestFixture]
-    class TestBase
+    public class TestBase
     {
         protected IWebDriver _driver;
 

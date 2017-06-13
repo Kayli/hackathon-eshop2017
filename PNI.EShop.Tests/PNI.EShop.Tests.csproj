@@ -52,9 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainTests.cs" />
+    <Compile Include="Base\PageBase.cs" />
+    <Compile Include="Tests\MainTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestBase.cs" />
+    <Compile Include="Base\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
