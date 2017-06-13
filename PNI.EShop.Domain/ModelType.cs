@@ -1,4 +1,5 @@
 ﻿using PNI.DDD.Core;
+using PNI.EShop.Core;
 
 namespace PNI.EShop.Domain
 {

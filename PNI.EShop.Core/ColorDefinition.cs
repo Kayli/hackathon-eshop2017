@@ -1,4 +1,4 @@
-﻿namespace PNI.EShop.Domain
+﻿namespace PNI.EShop.Core
 {
     public enum ColorDefinition
     {

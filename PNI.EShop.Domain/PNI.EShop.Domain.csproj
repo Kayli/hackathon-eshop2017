@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PNI.DDD.Core\PNI.DDD.Core.csproj" />
+    <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj" />
   </ItemGroup>
 
 </Project>
