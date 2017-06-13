@@ -25,5 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Products\" />
+  </ItemGroup>
 
 </Project>
