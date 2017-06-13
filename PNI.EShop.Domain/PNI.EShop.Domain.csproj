@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
   <ItemGroup>
     <ProjectReference Include="..\PNI.DDD.Core\PNI.DDD.Core.csproj" />
     <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj" />

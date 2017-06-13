@@ -1,0 +1,27 @@
+@using System.Collections.Generic
+@model System.Collections.Generic.IEnumerable<PNI.EShop.Web.Models.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Prodcuts";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Color</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.Name</td>
+        <td>@item.Type</td>
+        <td>@item.Color</td>
+    </tr>
+}
+    </tbody>
+</table>
