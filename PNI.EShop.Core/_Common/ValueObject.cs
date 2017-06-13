@@ -1,4 +1,4 @@
-﻿namespace PNI.DDD.Core
+﻿namespace PNI.EShop.Core._Common
 {
     public abstract class ValueObject<T> where T : ValueObject<T>
     {
@@ -34,6 +34,6 @@
             return !(a == b);
         }
 
-        public abstract ValueObject<T> Value();
+        public abstract T Value();
     }
 }

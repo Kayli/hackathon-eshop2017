@@ -1,6 +1,6 @@
 using System;
 
-namespace PNI.EShop.Core
+namespace PNI.EShop.Core._Common
 {
     public interface IEventStore
     {
