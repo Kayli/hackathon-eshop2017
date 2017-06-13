@@ -6,16 +6,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
-using PNI.EShop.Web.Services;
 
-namespace PNI.EShop.Web
+namespace PNI.EShop.API
 {
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance. 
     /// </summary>
-    internal sealed class UI : StatelessService
+    internal sealed class API : StatelessService
     {
-        public UI(StatelessServiceContext context)
+        public API(StatelessServiceContext context)
             : base(context)
         { }
 
@@ -41,18 +40,9 @@ namespace PNI.EShop.Web
                                     .UseApplicationInsights()
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url)
-                                    .ConfigureServices(ConfigureServices)
                                     .Build();
                     }))
             };
-        }
-
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            // Add dependencies
-            services.AddSingleton<IProductsService>(new ProductsService());
-            // Add framework services.
-            services.AddMvc();
         }
     }
 }

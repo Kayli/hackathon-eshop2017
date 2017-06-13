@@ -30,6 +30,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PNI.EShop.API\PNI.EShop.API.csproj" />
     <ProjectReference Include="..\PNI.EShop.Web\PNI.EShop.Web.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
