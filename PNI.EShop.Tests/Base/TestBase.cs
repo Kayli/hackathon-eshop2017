@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using NUnit.Framework;
 using System.Reflection;
 using System.Linq;
+using System.Threading;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -44,7 +46,23 @@ namespace PNI.EShop.Tests
 
         private void SaveScreenshot()
         {
-            throw new NotImplementedException();
+            if (_driver == null)
+                return;
+
+            var path = @"C:\Projects\screenshots\";
+            Directory.CreateDirectory(path);
+            var testName = TestContext.CurrentContext.Test.Name;
+
+            var fileName = $"{DateTime.Now:yyyy-MM-dd_hh-mm}-{testName}.{"png"}";
+            var fullPath = Path.Combine(path, fileName);
+
+            Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
+            //need to wait until the screenshot is taken
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+
+            screenshot.SaveAsFile(fullPath, ScreenshotImageFormat.Png);
+            //need to wait until the screenshot is saved as a file
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
         }
 
         #region  Methods to initiate Chrome driver
