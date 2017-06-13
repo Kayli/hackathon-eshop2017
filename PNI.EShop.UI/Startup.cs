@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PNI.EShop.Core;
 using PNI.EShop.Infrastructure;
+using PNI.EShop.Core.Order;
 
 namespace PNI.EShop.UI
 {
