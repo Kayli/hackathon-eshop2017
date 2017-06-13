@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PNI.EShop.Core;
+using PNI.EShop.Core.Order;
+using PNI.EShop.Infrastructure;
+using PNI.EShop.Infrastructure.EventStore;
 
 namespace PNI.EShop.Web
 {
@@ -23,12 +28,18 @@ namespace PNI.EShop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var sp = services.BuildServiceProvider();
+            //configure dependency injection
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddSingleton<IEventStore>(new EventStore());
+
             // Add framework services.
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -51,6 +62,9 @@ namespace PNI.EShop.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var eventStore = serviceProvider.GetService<IEventStore>();
+            eventStore.Subscribe(() => serviceProvider.GetService<IOrderService>());
         }
     }
 }
