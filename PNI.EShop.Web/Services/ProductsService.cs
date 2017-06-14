@@ -25,6 +25,7 @@ namespace PNI.EShop.Web.Services
                 {
                     Id = p.Id,
                     Name = p.Name,
+                    Description = p.Description,
                     Color = p.Model.Color,
                     Type = p.Model.Type,
                     CreatedAt = p.CreatedAt.ToString(),
@@ -49,6 +50,7 @@ namespace PNI.EShop.Web.Services
                 {
                     Id = product.Id,
                     Name = product.Name,
+                    Description = product.Description,
                     Color = product.Model.Color,
                     Type = product.Model.Type,
                     CreatedAt = product.CreatedAt.ToString(),
