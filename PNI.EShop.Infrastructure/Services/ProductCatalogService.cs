@@ -12,7 +12,7 @@ namespace PNI.EShop.Infrastructure.Services
         private static readonly ActorId ActorId = new ActorId("EShopProductRepsitory");
 
         private readonly IEventStore _eventStore;
-
+        
         public ProductCatalogService(IEventStore eventStore)
         {
             _eventStore = eventStore;
