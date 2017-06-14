@@ -4,19 +4,31 @@
 }
 @model PNI.EShop.Web.Models.OrderViewModel
 
-<h2>Index</h2>
-
+ 
 @using(Html.BeginForm("Create", "Order", FormMethod.Post, new {}))
 {
+
     <div class="form-group">
-        First Name:
-        @Html.TextBoxFor(m => m.Customer.FirstName, new { @class = "col-sm-3 control-label" })
-        Last Name:
-        @Html.TextBoxFor(m => m.Customer.LastName, new { @class = "col-sm-3 control-label" })
-        Address:
-        @Html.TextBoxFor(m => m.Customer.Address, new { @class = "col-sm-3 control-label" })
-        Postal Code:
-        @Html.TextBoxFor(m => m.Customer.PostalCode, new { @class = "col-sm-3 control-label" })
+        <div>
+            First Name:
+            @Html.TextBoxFor(m => m.Customer.FirstName)
+            @Html.ValidationMessageFor(m => m.Customer.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            Last Name:
+            @Html.TextBoxFor(m => m.Customer.LastName)
+            @Html.ValidationMessageFor(m => m.Customer.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            Address:
+            @Html.TextBoxFor(m => m.Customer.Address)
+            @Html.ValidationMessageFor(m => m.Customer.Address, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            Postal Code:
+            @Html.TextBoxFor(m => m.Customer.PostalCode)
+            @Html.ValidationMessageFor(m => m.Customer.PostalCode, "", new { @class = "text-danger" })
+        </div>
         <input type="submit" value="Place Order" />
     </div>
 }
