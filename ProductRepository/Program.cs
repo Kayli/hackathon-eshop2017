@@ -18,7 +18,7 @@ namespace ProductRepository
                 // are automatically populated when you build this project.
                 // For more information, see https://aka.ms/servicefabricactorsplatform
 
-                ActorRuntime.RegisterActorAsync<ProductRepositoryActor>(
+                ActorRuntime.RegisterActorAsync<ProductRepository>(
                    (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
 
                 Thread.Sleep(Timeout.Infinite);

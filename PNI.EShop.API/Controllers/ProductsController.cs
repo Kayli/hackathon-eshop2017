@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.ServiceBus.Messaging;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
 using PNI.EShop.API.Models;
 using PNI.EShop.Core.Product;
-using PNI.EShop.Core.Services;
 using PNI.EShop.Core._Common;
 using ProductRepository.Interfaces;
 
@@ -21,18 +18,14 @@ namespace PNI.EShop.API.Controllers
     {
         private static readonly ActorId ActorId = new ActorId("EShopProductRepsitory");
         private static readonly Uri RepsitoryActorUrl = new Uri("fabric:/PNI.Services/ProductRepositoryActorService");
-        private readonly IProductRepositoryActor _productRepository;
-
-        public ProductsController()
-        {
-            _productRepository = ActorProxy.Create<IProductRepositoryActor>(ActorId, RepsitoryActorUrl);
-        }
-
+        
         [HttpGet]
         [Route("")]
         public Task<ProductDto[]> Products()
         {
-            //var products = await _productRepository.RetrieveAllProductsAsync();
+            //var productRepository = ActorProxy.Create<IProductRepository>(ActorId, RepsitoryActorUrl);
+            
+            //var products = await productRepository.RetrieveAllProductsAsync();
 
             //return products.Select(CreateProductDtoFromProduct).ToArray();
 

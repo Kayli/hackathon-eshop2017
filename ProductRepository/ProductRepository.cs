@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
-using Microsoft.ServiceFabric.Actors.Client;
 using PNI.EShop.Core.Product;
 using PNI.EShop.Core._Common;
 using ProductRepository.Interfaces;
@@ -22,16 +19,17 @@ namespace ProductRepository
     ///  - None: State is kept in memory only and not replicated.
     /// </remarks>
     [StatePersistence(StatePersistence.Persisted)]
-    internal class ProductRepositoryActor : Actor, IProductRepositoryActor
+    internal class ProductRepository : Actor, IProductRepository
     {
         /// <summary>
         /// Initializes a new instance of ProductRepository
         /// </summary>
         /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
         /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
-        public ProductRepositoryActor(ActorService actorService, ActorId actorId)
+        public ProductRepository(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)
         {
+            var i = 1;
         }
         
         /// <summary>
@@ -50,9 +48,11 @@ namespace ProductRepository
             }
         }
 
-        public async Task<Product[]> RetrieveAllProductsAsync()
+        public Task<Product[]> RetrieveAllProductsAsync()
         {
-            return await StateManager.GetStateAsync<Product[]>("products");
+            //return await StateManager.GetStateAsync<Product[]>("products");
+
+            return Task.FromResult(CreateProducts().ToArray());
         }
 
         public async Task<Product> ProductById(ProductId id)
