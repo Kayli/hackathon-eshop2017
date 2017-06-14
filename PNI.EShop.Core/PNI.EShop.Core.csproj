@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Audit\AuditService.cs" />
     <Compile Include="Audit\IAuditRepository.cs" />
+    <Compile Include="Audit\IAuditService.cs" />
     <Compile Include="Order\IOrderRepository.cs" />
     <Compile Include="Order\IOrderService.cs" />
     <Compile Include="Order\OrderService.cs" />
