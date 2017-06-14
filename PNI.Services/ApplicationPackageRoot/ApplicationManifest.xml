@@ -6,10 +6,16 @@
     <Parameter Name="ProductRepositoryActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="ProductRepositoryActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ProductRepositoryActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ProductActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ProductActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ProductActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ProductActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ProductRepositoryPkg" ServiceManifestVersion="1.0.0" />
   </ServiceManifestImport>
@@ -40,6 +46,11 @@
     <Service Name="ProductRepositoryActorService" GeneratedIdRef="e469729d-785c-4202-a006-db66458ccc07|Persisted">
       <StatefulService ServiceTypeName="ProductRepositoryActorServiceType" TargetReplicaSetSize="[ProductRepositoryActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ProductRepositoryActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[ProductRepositoryActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="ProductActorService" GeneratedIdRef="7b48725d-d52a-447f-bcea-1be4a67c777b|Persisted">
+      <StatefulService ServiceTypeName="ProductActorServiceType" TargetReplicaSetSize="[ProductActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ProductActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ProductActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>

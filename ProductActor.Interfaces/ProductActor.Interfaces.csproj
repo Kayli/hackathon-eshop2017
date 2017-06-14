@@ -1,24 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{5DE5C405-A7A9-4B82-A4FC-A1A7435682D6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{1B4CD3FA-2AFC-4784-8904-3008B0A9EC66}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProductRepository</RootNamespace>
-    <AssemblyName>ProductRepository</AssemblyName>
+    <RootNamespace>ProductActor.Interfaces</RootNamespace>
+    <AssemblyName>ProductActor.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup>
-    <UpdateServiceFabricManifestEnabled>true</UpdateServiceFabricManifestEnabled>
-    <ServicePackagePath>PackageRoot</ServicePackagePath>
-    <ServicePackagePrefix>$(MSBuildProjectName)</ServicePackagePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,9 +32,6 @@
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup>
-    <IsServiceFabricServiceProject>true</IsServiceFabricServiceProject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ServiceFabric.Actors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
@@ -88,29 +79,18 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProductEvents.cs" />
+    <Compile Include="ProductActorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProductRepository.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ActorEventSource.cs" />
+    <Compile Include="IProductActor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PackageRoot\ServiceManifest.xml" />
-    <None Include="PackageRoot\Config\Settings.xml" />
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj">
       <Project>{D26808B8-2F2B-4F4C-B715-82D88D97A159}</Project>
       <Name>PNI.EShop.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProductActor.Interfaces\ProductActor.Interfaces.csproj">
-      <Project>{1B4CD3FA-2AFC-4784-8904-3008B0A9EC66}</Project>
-      <Name>ProductActor.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProductRepository.Interfaces\ProductRepository.Interfaces.csproj">
-      <Project>{3BDA484B-77EB-44AB-BD18-F87372394606}</Project>
-      <Name>ProductRepository.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using PNI.EShop.Core;
-using PNI.EShop.Core.ProductCatalog;
-using PNI.EShop.Core.ProductCatalog.Data;
 using PNI.EShop.Core.ProductCatalog.DataAccess;
+using ProductActor.Interfaces;
 using ProductRepository.Interfaces;
 
 namespace ProductRepository
@@ -40,102 +41,141 @@ namespace ProductRepository
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
 
-            var state = await StateManager.TryGetStateAsync<Product[]>("products");
+            var products = await StateManager.TryGetStateAsync<List<Guid>>("products");
 
-            if (!state.HasValue)
+            if (!products.HasValue)
             {
-                await StateManager.TryAddStateAsync("products", CreateProducts());
+                CreateProducts();
             }
         }
 
-        public Task<ProductDto[]> RetrieveAllProductsAsync()
+        public async Task<ProductDto[]> RetrieveAllProductsAsync()
         {
-            return StateManager.GetStateAsync<ProductDto[]>("products");
-        }
+            var productIds = await StateManager.TryGetStateAsync<List<Guid>>("products");
+            var products = new List<ProductDto>();
 
-        public async Task<ProductDto> ProductById(Guid id)
-        {
-            var products = await StateManager.GetStateAsync<ProductDto[]>("products");
-
-            return products.First(p => p.Id == id);
-        }
-
-        private static ProductDto[] CreateProducts()
-        {
-            return new []
+            if (productIds.HasValue)
             {
-                new ProductDto
-                {
-                   Id =Guid.Parse("89707fc0-1493-4899-a062-e37127ec497b"),
-                   Name = "Black Box",
-                   Description = "A simple black box",
-                   Model = new ProductModelDto {
-                        Color = ColorDefinition.Black,
-                        Type = ModelTypeDefinition.Box,
-                        CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                        UpdatedAt = DateTimeOffset.UtcNow
-                    },
-                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                    ModifiedAt = DateTimeOffset.UtcNow
-                },
-                new ProductDto
-                {
-                    Id =Guid.Parse("5a19ff97-8095-4d43-8d30-26751851a6fe"),
-                    Name = "White Box",
-                    Description = "A simple white box",
-                    Model = new ProductModelDto {
-                        Color = ColorDefinition.White,
-                        Type = ModelTypeDefinition.Box,
-                        CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                        UpdatedAt = DateTimeOffset.UtcNow
-                    },
-                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                    ModifiedAt = DateTimeOffset.UtcNow
-                },
-                new ProductDto
-                {
-                    Id =Guid.Parse("4b4480b3-e368-4f01-931c-67c52eee914a"),
-                    Name = "Red Cone",
-                    Description = "A simple red cone",
-                    Model = new ProductModelDto {
-                        Color = ColorDefinition.Red,
-                        Type = ModelTypeDefinition.Cone,
-                        CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                        UpdatedAt = DateTimeOffset.UtcNow
-                    },
-                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                    ModifiedAt = DateTimeOffset.UtcNow
-                },
-                new ProductDto
-                {
-                    Id =Guid.Parse("718e5ba7-b31c-4655-849b-880948d83cba"),
-                    Name = "Green Sphere",
-                    Description = "A simple green sphere",
-                    Model = new ProductModelDto {
-                        Color = ColorDefinition.Green,
-                        Type = ModelTypeDefinition.Sphere,
-                        CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                        UpdatedAt = DateTimeOffset.UtcNow
-                    },
-                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                    ModifiedAt = DateTimeOffset.UtcNow
-                },
-                new ProductDto
-                {
-                    Id =Guid.Parse("5803710e-92a9-4b08-8788-fccf8a9c8e4a"),
-                    Name = "Blue Cylinder",
-                    Description = "A simple blue cylinder",
-                    Model = new ProductModelDto {
-                        Color = ColorDefinition.Blue,
-                        Type = ModelTypeDefinition.Cylinder,
-                        CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                        UpdatedAt = DateTimeOffset.UtcNow
-                    },
-                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
-                    ModifiedAt = DateTimeOffset.UtcNow
-                }
-            };
+                var productList = productIds.Value.Select(ProductById).ToArray();
 
+                Task.WaitAll(productList);
+
+                products.AddRange(productList.Select(task => task.Result));
+            }
+
+            return products.ToArray();
+        }
+        
+        public Task<ProductDto> ProductById(Guid id)
+        {
+            var productActor = ProductActorFactory.GetProductActor(new ActorId(id));
+
+            return productActor.RetrieveProduct();
+        }
+
+        private async Task CreateActor(ProductDto product)
+        {
+            var productActor = ProductActorFactory.GetProductActor(new ActorId(product.Id));
+
+            await productActor.CreateProduct(product);
+
+            await AddIdToState(product.Id);
+        }
+
+        private async Task AddIdToState(Guid id)
+        {
+            var state = await StateManager.TryGetStateAsync<List<Guid>>("products");
+            if (state.HasValue)
+            {
+                state.Value.Add(id);
+
+                await StateManager.AddOrUpdateStateAsync("products", state.Value, (key, products) => products);
+
+                return;
+            }
+
+            var newState = new List<Guid> {id};
+
+            await StateManager.AddStateAsync("products", newState);
+        }
+
+        private async void CreateProducts()
+        {
+            await CreateActor(new ProductDto
+            {
+                Id = Guid.Parse("89707fc0-1493-4899-a062-e37127ec497b"),
+                Name = "Black Box",
+                Description = "A simple black box",
+                Model = new ProductModelDto
+                {
+                    Color = ColorDefinition.Black,
+                    Type = ModelTypeDefinition.Box,
+                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                    UpdatedAt = DateTimeOffset.UtcNow
+                },
+                CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                ModifiedAt = DateTimeOffset.UtcNow
+            });
+            await CreateActor(new ProductDto
+            {
+                Id = Guid.Parse("5a19ff97-8095-4d43-8d30-26751851a6fe"),
+                Name = "White Box",
+                Description = "A simple white box",
+                Model = new ProductModelDto
+                {
+                    Color = ColorDefinition.White,
+                    Type = ModelTypeDefinition.Box,
+                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                    UpdatedAt = DateTimeOffset.UtcNow
+                },
+                CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                ModifiedAt = DateTimeOffset.UtcNow
+            });
+            await CreateActor(new ProductDto
+            {
+                Id = Guid.Parse("4b4480b3-e368-4f01-931c-67c52eee914a"),
+                Name = "Red Cone",
+                Description = "A simple red cone",
+                Model = new ProductModelDto
+                {
+                    Color = ColorDefinition.Red,
+                    Type = ModelTypeDefinition.Cone,
+                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                    UpdatedAt = DateTimeOffset.UtcNow
+                },
+                CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                ModifiedAt = DateTimeOffset.UtcNow
+            });
+            await CreateActor(new ProductDto
+            {
+                Id = Guid.Parse("718e5ba7-b31c-4655-849b-880948d83cba"),
+                Name = "Green Sphere",
+                Description = "A simple green sphere",
+                Model = new ProductModelDto
+                {
+                    Color = ColorDefinition.Green,
+                    Type = ModelTypeDefinition.Sphere,
+                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                    UpdatedAt = DateTimeOffset.UtcNow
+                },
+                CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                ModifiedAt = DateTimeOffset.UtcNow
+            });
+            await CreateActor(new ProductDto
+            {
+                Id = Guid.Parse("5803710e-92a9-4b08-8788-fccf8a9c8e4a"),
+                Name = "Blue Cylinder",
+                Description = "A simple blue cylinder",
+                Model = new ProductModelDto
+                {
+                    Color = ColorDefinition.Blue,
+                    Type = ModelTypeDefinition.Cylinder,
+                    CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                    UpdatedAt = DateTimeOffset.UtcNow
+                },
+                CreatedAt = DateTimeOffset.Parse("Jan 24, 1975 15:00z"),
+                ModifiedAt = DateTimeOffset.UtcNow
+            });
         }
     }
 }
