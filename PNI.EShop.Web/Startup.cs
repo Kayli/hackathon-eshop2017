@@ -64,6 +64,9 @@ namespace PNI.EShop.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Products}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "Order",
+                    template: "{controller=Order}/{action=Index}/{id?}");
             });
 
             var eventStore = serviceProvider.GetService<IEventStore>();
