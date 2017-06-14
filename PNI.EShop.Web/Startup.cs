@@ -14,6 +14,7 @@ using PNI.EShop.Web.Services;
 using OrderService = PNI.EShop.Core.Order.OrderService;
 using PNI.EShop.Core.Services;
 using PNI.EShop.Core.ProductCatalog;
+using PNI.EShop.Infrastructure.Services;
 
 namespace PNI.EShop.Web
 {

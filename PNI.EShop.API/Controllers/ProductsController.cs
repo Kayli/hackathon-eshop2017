@@ -21,7 +21,7 @@ namespace PNI.EShop.API.Controllers
 
             try
             {
-                return productRepository.RetrieveAllProductsAsync();
+                return productRepository.RetrieveAllProducts();
             }
             catch (Exception e)
             {

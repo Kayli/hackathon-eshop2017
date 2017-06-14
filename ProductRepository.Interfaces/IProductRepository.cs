@@ -11,7 +11,8 @@ namespace ProductRepository.Interfaces
     /// </summary>
     public interface IProductRepository : IActor
     {
-        Task<ProductDto[]> RetrieveAllProductsAsync();
+        Task<ProductDto[]> RetrieveAllProducts();
         Task<ProductDto> ProductById(Guid id);
+        Task CreateProduct(ProductDto product);
     }
 }
