@@ -64,7 +64,11 @@ namespace PNI.EShop.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                ServeUnknownFileTypes = true,
+                DefaultContentType = "image/png"
+            });
 
             app.UseMvc(routes =>
             {
