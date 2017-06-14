@@ -20,8 +20,19 @@ namespace PNI.EShop.Web.Controllers
 
         public IActionResult Index()
         {
+            var retrievedTime = DateTime.Now;
             var auditList = _auditService.GetLatestAudits(_auditCount);
-            return View(new AuditViewModel() { AuditList = auditList });
+            var model = new AuditViewModel()
+            {
+                AuditList = auditList.Select(a => new AuditEventViewModel() {
+                    Id = a.Id,
+                    EventName = a.Name ?? "No event name",
+                    EventDetails = a.Details ?? "No event details",
+                    EventDateTime = a.CreatedTime
+                }),
+                RetrievedTime = retrievedTime
+            };
+            return View(model);
         }
 
         public IActionResult Clear()

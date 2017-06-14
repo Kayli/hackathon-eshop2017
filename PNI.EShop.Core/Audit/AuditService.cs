@@ -15,7 +15,7 @@ namespace PNI.EShop.Core.Audit
             // TODO subscribe to all events
         }
 
-        public IEnumerable<string> GetLatestAudits(int count)
+        public IEnumerable<Audit> GetLatestAudits(int count)
         {
             return _auditRepository.GetLatest(count);
         }

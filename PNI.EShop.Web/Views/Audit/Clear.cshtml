@@ -7,5 +7,9 @@
 @if (Model == true)
 {
     <p>All audit items cleared successfully.</p>
-    <p>Click @Html.ActionLink("here", "Index") to return.</p>
 }
+else
+{
+    <p>Oops! Something went wrong while clearing audit items.</p>
+}
+<p>Click @Html.ActionLink("here", "Index") to return.</p>

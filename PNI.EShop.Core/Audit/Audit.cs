@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace PNI.EShop.Core.Audit
 {
-    public interface IAuditService
+    public class Audit
     {
-        IEnumerable<Audit> GetLatestAudits(int count);
-
-        bool ClearAudits();
+        public string Id;
+        public string Name;
+        public string Details;
+        public DateTime CreatedTime;
     }
 }
