@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PNI.EShop.Core;
-using PNI.EShop.Core._Common;
 
 namespace PNI.EShop.Web.Controllers
 {

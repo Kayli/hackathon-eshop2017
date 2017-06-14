@@ -1,4 +1,4 @@
-﻿namespace PNI.EShop.Core._Common
+﻿namespace PNI.EShop.Core
 {
     public abstract class Entity<TId> : IEntity<TId>
     {

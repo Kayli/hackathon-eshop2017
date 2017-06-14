@@ -4,7 +4,6 @@ using System.Text;
 using PNI.EShop.Core;
 using System.Collections.Concurrent;
 using System.Reflection;
-using PNI.EShop.Core._Common;
 using System.Linq;
 
 namespace PNI.EShop.Infrastructure.EventStore

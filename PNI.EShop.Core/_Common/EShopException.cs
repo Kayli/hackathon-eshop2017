@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PNI.EShop.Core._Common
+namespace PNI.EShop.Core
 {
     public class EShopException : Exception
     {

@@ -1,15 +1,18 @@
 ﻿using System;
-using PNI.EShop.Core._Common;
+using System.Runtime.Serialization;
 
-namespace PNI.EShop.API.Models
+namespace PNI.EShop.Core.ProductCatalog.DataAccess
 {
-    public class ProductDto
+    [DataContract]
+    public class ProductModelDto
     {
-        public Guid Id { get; set; }
+        [DataMember]
         public ColorDefinition Color { get; set; }
+        [DataMember]
         public ModelTypeDefinition Type { get; set; }
-        public string Name { get; set; }
+        [DataMember]
         public DateTimeOffset CreatedAt { get; set; }
+        [DataMember]
         public DateTimeOffset UpdatedAt { get; set; }
     }
 }

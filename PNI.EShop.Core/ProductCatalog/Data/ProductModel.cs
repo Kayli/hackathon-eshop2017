@@ -1,6 +1,4 @@
-﻿using PNI.EShop.Core._Common;
-
-namespace PNI.EShop.Core.Product
+namespace PNI.EShop.Core.ProductCatalog.Data
 {
     public class ProductModel : ValueObject<ProductModel>
     {
