@@ -5,9 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceBus.Messaging;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Client;
 using PNI.EShop.API.Models;
 using PNI.EShop.Core.Services;
 using PNI.EShop.Core._Common;
+using ProductRepository.Interfaces;
 
 namespace PNI.EShop.API.Controllers
 {
@@ -21,9 +24,11 @@ namespace PNI.EShop.API.Controllers
     [Route("Products")]
     public class ProductsController : Controller
     {
+        private static readonly ActorId ActorId = ActorId.CreateRandom();
+
         [HttpGet]
         [Route("")]
-        public Task<ProductDto[]> Products()
+        public async Task<ProductDto[]> Products()
         {
             var client =
                 TopicClient.CreateFromConnectionString(
@@ -34,8 +39,20 @@ namespace PNI.EShop.API.Controllers
             {
                 ContentType = message.GetType().ToString()
             });
+            
+            var repo = ActorProxy.Create<IProductRepositoryActor>(ActorId, new Uri("fabric:/PNI.Services/ProductRepositoryActorService"));
 
-            return Task.FromResult(CreateProducts().ToArray());
+            var products = await repo.RetrieveAllProductsAsync();
+
+            return products.Select(p => new ProductDto
+                                            {
+                                                Id = p.Id.Id,
+                                                Name = p.Name.ToString(),
+                                                Color = p.Model.Color.Color,
+                                                Type = p.Model.Type.ModelTypeDefinition,
+                                                CreatedAt = p.CreatedAt.Date,
+                                                UpdatedAt = p.ModifiedAt.Date
+                                            }).ToArray();
         }
 
         [HttpGet]

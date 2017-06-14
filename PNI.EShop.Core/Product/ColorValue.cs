@@ -4,26 +4,26 @@ namespace PNI.EShop.Core.Product
 {
     public class ColorValue : ValueObject<ColorValue>
     {
-        private readonly ColorDefinition _color;
+        public ColorDefinition Color { get; }
 
         public ColorValue(ColorDefinition color)
         {
-            _color = color;
+            Color = color;
         }
 
         protected override bool EqualsCore(ColorValue other)
         {
-            return _color.Equals(other._color);
+            return Color.Equals(other.Color);
         }
 
         protected override int GetHashCodeCore()
         {
-            return _color.GetHashCode() ^ 444;
+            return Color.GetHashCode() ^ 444;
         }
 
         public override ColorValue Value()
         {
-            return new ColorValue(_color);
+            return new ColorValue(Color);
         }
     }
 }

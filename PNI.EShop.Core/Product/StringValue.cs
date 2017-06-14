@@ -25,5 +25,10 @@ namespace PNI.EShop.Core.Product
         {
             return new StringValue(_value);
         }
+
+        public override string ToString()
+        {
+            return _value.Substring(0);
+        }
     }
 }

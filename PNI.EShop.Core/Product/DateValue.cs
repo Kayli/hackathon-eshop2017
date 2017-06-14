@@ -5,26 +5,26 @@ namespace PNI.EShop.Core.Product
 {
     public class DateValue : ValueObject<DateValue>
     {
-        private readonly DateTimeOffset _value;
+        public DateTimeOffset Date { get; }
 
         public DateValue(DateTimeOffset value)
         {
-            _value = value;
+            Date = value;
         }
 
         protected override bool EqualsCore(DateValue other)
         {
-            return _value.Equals(other._value);
+            return Date.Equals(other.Date);
         }
 
         protected override int GetHashCodeCore()
         {
-            return _value.GetHashCode() ^ 555;
+            return Date.GetHashCode() ^ 555;
         }
 
         public override DateValue Value()
         {
-            return new DateValue(_value);
+            return new DateValue(Date);
         }
     }
 }

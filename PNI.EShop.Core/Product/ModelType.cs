@@ -4,26 +4,26 @@ namespace PNI.EShop.Core.Product
 {
     public class ModelType : ValueObject<ModelType>
     {
-        private readonly ModelTypeDefinition _modelType;
+        public ModelTypeDefinition ModelTypeDefinition { get; }
 
-        public ModelType(ModelTypeDefinition modelType)
+        public ModelType(ModelTypeDefinition modelTypeDefinition)
         {
-            _modelType = modelType;
+            ModelTypeDefinition = modelTypeDefinition;
         }
 
         protected override bool EqualsCore(ModelType other)
         {
-            return _modelType.Equals(other._modelType);
+            return ModelTypeDefinition.Equals(other.ModelTypeDefinition);
         }
 
         protected override int GetHashCodeCore()
         {
-            return _modelType.GetHashCode() ^ 333;
+            return ModelTypeDefinition.GetHashCode() ^ 333;
         }
 
         public override ModelType Value()
         {
-            return new ModelType(_modelType);
+            return new ModelType(ModelTypeDefinition);
         }
     }
 }
