@@ -1,16 +1,21 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
+using NUnit.Framework.Internal;
+using PNI.EShop.Tests.Pages;
 
 namespace PNI.EShop.Tests
 {
     public class MainTests : TestBase
     {
+        public ProductsPage _productsPage;
+
+
        [Test]
        public void Can_view_products_list()
-        {
-            _driver.Navigate().GoToUrl("http://localhost:8507/products");
-        }
+       {
+           Assert.AreEqual(5, _productsPage.GetProductsCount);
+       }
 
     }
 }

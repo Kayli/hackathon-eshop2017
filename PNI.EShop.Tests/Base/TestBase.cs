@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
@@ -17,11 +16,13 @@ namespace PNI.EShop.Tests
     public class TestBase
     {
         protected IWebDriver _driver;
+        protected string homePageUrl = "http://localhost:8507/products";
 
         [OneTimeSetUp]
         public virtual void BeforeAll()
         {
             _driver = CreateChromeDriver();
+            _driver.Navigate().GoToUrl(homePageUrl);
         }
 
         [OneTimeTearDown]
