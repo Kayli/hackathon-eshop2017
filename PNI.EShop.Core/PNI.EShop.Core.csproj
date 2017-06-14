@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ServiceFabric.Services">
-      <HintPath>..\..\..\..\..\.nuget\packages\microsoft.servicefabric.services\2.3.311\lib\net45\Microsoft.ServiceFabric.Services.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Fabric;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.ServiceBus;
+using Microsoft.ServiceBus.Messaging;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
@@ -20,11 +23,18 @@ namespace PNI.EShop.Service.ProductManager
     internal sealed class ProductManager : StatefulService, IProductManagerService
     {
         private readonly ConcurrentBag<Product> _products;
+        private readonly SubscriptionClient _subscriptionClient;
 
         public ProductManager(StatefulServiceContext context)
             : base(context)
         {
             _products = new ConcurrentBag<Product>(CreateProducts());
+            
+            _subscriptionClient =
+                SubscriptionClient.CreateFromConnectionString(ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"], "productrequests", "dataRequestMessage");
+
+            _subscriptionClient.OnMessageAsync(ReceiveMessageAsync);
+
         }
 
         /// <summary>
@@ -71,6 +81,19 @@ namespace PNI.EShop.Service.ProductManager
 
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
             }
+        }
+
+        [Serializable]
+        private class RequestAllDataMessage
+        {
+            public bool SendAllProducts => true;
+        }
+
+        private static Task ReceiveMessageAsync(BrokeredMessage message)
+        {
+            var body = message.GetBody<string>();
+
+            return Task.FromResult(1);
         }
 
         public IEnumerable<Product> RetrieveAllProducts()
