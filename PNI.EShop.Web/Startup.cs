@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PNI.EShop.Core;
 using PNI.EShop.Core.Order;
+using PNI.EShop.Core.Audit;
 using PNI.EShop.Core._Common;
 using PNI.EShop.Infrastructure;
 using PNI.EShop.Infrastructure.EventStore;
@@ -33,6 +34,7 @@ namespace PNI.EShop.Web
             //configure dependency injection
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IAuditService, AuditService>();
             services.AddSingleton<IEventStore>(new EventStore());
 
             // Add framework services.
@@ -61,7 +63,10 @@ namespace PNI.EShop.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Products}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "Order",
+                    template: "{controller=Order}/{action=Index}/{id?}");
             });
 
             var eventStore = serviceProvider.GetService<IEventStore>();

@@ -42,9 +42,12 @@
   <ItemGroup>
     <Compile Include="Audit\AuditService.cs" />
     <Compile Include="Audit\IAuditRepository.cs" />
+    <Compile Include="Audit\IAuditService.cs" />
+    <Compile Include="Order\Customer.cs" />
     <Compile Include="Order\IOrderRepository.cs" />
     <Compile Include="Order\IOrderService.cs" />
     <Compile Include="Order\OrderService.cs" />
+    <Compile Include="Order\OrderStatus.cs" />
     <Compile Include="Product\ColorValue.cs" />
     <Compile Include="Product\DateValue.cs" />
     <Compile Include="Product\ProductModel.cs" />

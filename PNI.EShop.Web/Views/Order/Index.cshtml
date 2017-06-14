@@ -1,0 +1,22 @@
+
+@{
+    ViewData["Title"] = "Index";
+}
+@model PNI.EShop.Web.Models.OrderViewModel
+
+<h2>Index</h2>
+
+@using(Html.BeginForm("Create", "Order", FormMethod.Post, new {}))
+{
+    <div class="form-group">
+        First Name:
+        @Html.TextBoxFor(m => m.Customer.FirstName, new { @class = "col-sm-3 control-label" })
+        Last Name:
+        @Html.TextBoxFor(m => m.Customer.LastName, new { @class = "col-sm-3 control-label" })
+        Address:
+        @Html.TextBoxFor(m => m.Customer.Address, new { @class = "col-sm-3 control-label" })
+        Postal Code:
+        @Html.TextBoxFor(m => m.Customer.PostalCode, new { @class = "col-sm-3 control-label" })
+        <input type="submit" value="Place Order" />
+    </div>
+}

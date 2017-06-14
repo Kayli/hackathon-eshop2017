@@ -1,0 +1,11 @@
+﻿@model PNI.EShop.Web.Models.AuditViewModel
+
+@{
+    ViewData["Title"] = "Audit Page";
+}
+
+<h2>Audit</h2>
+@foreach (var audit in Model.AuditList)
+{
+    <p>@audit</p>
+}
