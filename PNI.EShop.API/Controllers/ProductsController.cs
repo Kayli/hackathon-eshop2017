@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Microsoft.ServiceBus.Messaging;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Client;
 using PNI.EShop.API.Models;
+using PNI.EShop.Core.Product;
 using PNI.EShop.Core.Services;
 using PNI.EShop.Core._Common;
+using ProductRepository.Interfaces;
 
 namespace PNI.EShop.API.Controllers
 {
@@ -14,13 +19,22 @@ namespace PNI.EShop.API.Controllers
     [Route("Products")]
     public class ProductsController : Controller
     {
+        private static readonly ActorId ActorId = new ActorId("EShopProductRepsitory");
+        private static readonly Uri RepsitoryActorUrl = new Uri("fabric:/PNI.Services/ProductRepositoryActorService");
+        private readonly IProductRepositoryActor _productRepository;
+
+        public ProductsController()
+        {
+            _productRepository = ActorProxy.Create<IProductRepositoryActor>(ActorId, RepsitoryActorUrl);
+        }
+
         [HttpGet]
         [Route("")]
         public Task<ProductDto[]> Products()
         {
-            //var service = ServiceProxy.Create<IProductManagerService>(new Uri("fabric:/pnimedia/ProductManagerType"));
+            //var products = await _productRepository.RetrieveAllProductsAsync();
 
-            //var response = service.RetrieveAllProducts();
+            //return products.Select(CreateProductDtoFromProduct).ToArray();
 
             return Task.FromResult(CreateProducts().ToArray());
         }
@@ -30,6 +44,19 @@ namespace PNI.EShop.API.Controllers
         public Task<ProductDto> Product(Guid id)
         {
             return Task.FromResult(CreateProducts().First(p => p.Id == id));
+        }
+
+        private static ProductDto CreateProductDtoFromProduct(Product proeduct)
+        {
+            return new ProductDto
+            {
+                Id = proeduct.Id.Id,
+                Name = proeduct.Name.ToString(),
+                Color = proeduct.Model.Color.Color,
+                Type = proeduct.Model.Type.ModelTypeDefinition,
+                CreatedAt = proeduct.CreatedAt.Date,
+                UpdatedAt = proeduct.ModifiedAt.Date
+            };
         }
 
         private static IEnumerable<ProductDto> CreateProducts()

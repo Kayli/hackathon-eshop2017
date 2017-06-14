@@ -12,7 +12,7 @@ namespace PNI.EShop.Tests.Base
     {
         protected static IWebDriver _driver;
 
-        public PageBase(IWebDriver driver)
+        protected PageBase(IWebDriver driver)
         {
             _driver = driver;
             PageFactory.InitElements(_driver, this);

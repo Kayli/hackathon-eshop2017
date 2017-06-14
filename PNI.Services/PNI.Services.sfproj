@@ -31,8 +31,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PNI.EShop.API\PNI.EShop.API.csproj" />
-    <ProjectReference Include="..\PNI.EShop.Service.ProductManager\PNI.EShop.Service.ProductManager.csproj" />
     <ProjectReference Include="..\PNI.EShop.Web\PNI.EShop.Web.csproj" />
+    <ProjectReference Include="..\ProductRepository\ProductRepository.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

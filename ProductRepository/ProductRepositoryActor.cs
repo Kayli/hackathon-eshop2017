@@ -1,107 +1,63 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Fabric;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.ServiceBus;
-using Microsoft.ServiceBus.Messaging;
-using Microsoft.ServiceFabric.Data.Collections;
-using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Runtime;
+using Microsoft.ServiceFabric.Actors.Client;
 using PNI.EShop.Core.Product;
-using PNI.EShop.Core.Services;
 using PNI.EShop.Core._Common;
+using ProductRepository.Interfaces;
 
-namespace PNI.EShop.Service.ProductManager
+namespace ProductRepository
 {
-    /// <summary>
-    /// An instance of this class is created for each service replica by the Service Fabric runtime.
-    /// </summary>
-    internal sealed class ProductManager : StatefulService, IProductManagerService
+    /// <remarks>
+    /// This class represents an actor.
+    /// Every ActorID maps to an instance of this class.
+    /// The StatePersistence attribute determines persistence and replication of actor state:
+    ///  - Persisted: State is written to disk and replicated.
+    ///  - Volatile: State is kept in memory only and replicated.
+    ///  - None: State is kept in memory only and not replicated.
+    /// </remarks>
+    [StatePersistence(StatePersistence.Persisted)]
+    internal class ProductRepositoryActor : Actor, IProductRepositoryActor
     {
-        private readonly ConcurrentBag<Product> _products;
-        private readonly SubscriptionClient _subscriptionClient;
-
-        public ProductManager(StatefulServiceContext context)
-            : base(context)
-        {
-            _products = new ConcurrentBag<Product>(CreateProducts());
-            
-            _subscriptionClient =
-                SubscriptionClient.CreateFromConnectionString(ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"], "productrequests", "dataRequestMessage");
-
-            _subscriptionClient.OnMessageAsync(ReceiveMessageAsync);
-
-        }
-
         /// <summary>
-        /// Optional override to create listeners (e.g., HTTP, Service Remoting, WCF, etc.) for this service replica to handle client or user requests.
+        /// Initializes a new instance of ProductRepository
         /// </summary>
-        /// <remarks>
-        /// For more information on service communication, see https://aka.ms/servicefabricservicecommunication
-        /// </remarks>
-        /// <returns>A collection of listeners.</returns>
-        protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
+        /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
+        /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
+        public ProductRepositoryActor(ActorService actorService, ActorId actorId)
+            : base(actorService, actorId)
         {
-            return new ServiceReplicaListener[0];
         }
-
+        
         /// <summary>
-        /// This is the main entry point for your service replica.
-        /// This method executes when this replica of your service becomes primary and has write status.
+        /// This method is called whenever an actor is activated.
+        /// An actor is activated the first time any of its methods are invoked.
         /// </summary>
-        /// <param name="cancellationToken">Canceled when Service Fabric needs to shut down this service replica.</param>
-        protected override async Task RunAsync(CancellationToken cancellationToken)
+        protected override async Task OnActivateAsync()
         {
-            // TODO: Replace the following sample code with your own logic 
-            //       or remove this RunAsync override if it's not needed in your service.
+            ActorEventSource.Current.ActorMessage(this, "Actor activated.");
 
-            var myDictionary = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, long>>("myDictionary");
+            var state = await StateManager.TryGetStateAsync<IEnumerable<Product>>("products");
 
-            while (true)
+            if (!state.HasValue)
             {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                using (var tx = this.StateManager.CreateTransaction())
-                {
-                    var result = await myDictionary.TryGetValueAsync(tx, "Counter");
-
-                    ServiceEventSource.Current.ServiceMessage(this.Context, "Current Counter Value: {0}",
-                        result.HasValue ? result.Value.ToString() : "Value does not exist.");
-
-                    await myDictionary.AddOrUpdateAsync(tx, "Counter", 0, (key, value) => ++value);
-
-                    // If an exception is thrown before calling CommitAsync, the transaction aborts, all changes are 
-                    // discarded, and nothing is saved to the secondary replicas.
-                    await tx.CommitAsync();
-                }
-
-                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+                await StateManager.TryAddStateAsync("products", CreateProducts());
             }
         }
 
-        [Serializable]
-        private class RequestAllDataMessage
+        public async Task<Product[]> RetrieveAllProductsAsync()
         {
-            public bool SendAllProducts => true;
+            return await StateManager.GetStateAsync<Product[]>("products");
         }
 
-        private static Task ReceiveMessageAsync(BrokeredMessage message)
+        public async Task<Product> ProductById(ProductId id)
         {
-            return Task.FromResult(1);
-        }
-
-        public IEnumerable<Product> RetrieveAllProducts()
-        {
-            return _products.ToArray();
-        }
-
-        public Product ProductById(ProductId id)
-        {
-            return _products.First(p => p.Id == id);
+            return (await StateManager.GetStateAsync<Product[]>("products")).First(p => p.Id == id);
         }
 
         private static IEnumerable<Product> CreateProducts()
