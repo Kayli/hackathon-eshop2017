@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audit\Audit.cs" />
     <Compile Include="Audit\AuditService.cs" />
     <Compile Include="Audit\IAuditRepository.cs" />
     <Compile Include="Audit\IAuditService.cs" />
@@ -54,7 +56,6 @@
     <Compile Include="ProductCatalog\Data\ColorValue.cs" />
     <Compile Include="ProductCatalog\Data\DateValue.cs" />
     <Compile Include="ProductCatalog\IProductCatalogService.cs" />
-    <Compile Include="ProductCatalog\ProductCatalogService.cs" />
     <Compile Include="ProductCatalog\Data\ProductModel.cs" />
     <Compile Include="ProductCatalog\Data\ModelType.cs" />
     <Compile Include="ProductCatalog\DataAccess\Product.cs" />

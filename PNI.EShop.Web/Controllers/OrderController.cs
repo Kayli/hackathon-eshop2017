@@ -1,18 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PNI.EShop.Web.Models;
+using System;
 
 namespace PNI.EShop.Web.Controllers
 {
     public class OrderController : Controller
     {
+        private static OrderViewModel _tempOrderViewModel;
         // GET: Order
         public ActionResult Index()
         {
+            if(_tempOrderViewModel != null)
+            {
+                return View(_tempOrderViewModel);
+            }
             return View();
         }
 
@@ -34,15 +35,21 @@ namespace PNI.EShop.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(OrderViewModel orderViewModel)
         {
+            _tempOrderViewModel = orderViewModel;
             try
             {
-                // TODO: validate and save
+                if (!ModelState.IsValid)
+                {
+                    return View("Index", orderViewModel);
+                }
+                
                 orderViewModel.OrderStatus = Core.Order.OrderStatus.OrderPlaced;
                 return RedirectToAction("Confirmation", "Order", orderViewModel);
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View("Index", orderViewModel);
             }
         }
 

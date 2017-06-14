@@ -32,7 +32,13 @@
   <ItemGroup>
     <ProjectReference Include="..\PNI.EShop.API\PNI.EShop.API.csproj" />
     <ProjectReference Include="..\PNI.EShop.Web\PNI.EShop.Web.csproj" />
+    <ProjectReference Include="..\ProductActor\ProductActor.csproj" />
     <ProjectReference Include="..\ProductRepository\ProductRepository.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>System.ComponentModel.DataAnnotations</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

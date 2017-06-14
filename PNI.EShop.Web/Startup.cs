@@ -14,6 +14,7 @@ using PNI.EShop.Web.Services;
 using OrderService = PNI.EShop.Core.Order.OrderService;
 using PNI.EShop.Core.Services;
 using PNI.EShop.Core.ProductCatalog;
+using PNI.EShop.Infrastructure.Services;
 
 namespace PNI.EShop.Web
 {
@@ -37,6 +38,7 @@ namespace PNI.EShop.Web
             var sp = services.BuildServiceProvider();
             //configure dependency injection
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IAuditRepository, AuditRepository>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IAuditService, AuditService>();
             services.AddTransient<IProductCatalogService, ProductCatalogService>();

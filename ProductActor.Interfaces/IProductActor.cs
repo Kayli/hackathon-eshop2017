@@ -1,18 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using PNI.EShop.Core.ProductCatalog.DataAccess;
 
-namespace ProductRepository.Interfaces
+namespace ProductActor.Interfaces
 {
     /// <summary>
     /// This interface defines the methods exposed by an actor.
     /// Clients use this interface to interact with the actor that implements it.
     /// </summary>
-    public interface IProductRepository : IActor
+    public interface IProductActor : IActor, IActorEventPublisher<IProductEvents>
     {
-        Task<ProductDto[]> RetrieveAllProducts();
-        Task<ProductDto> ProductById(Guid id);
         Task CreateProduct(ProductDto product);
+        Task<ProductDto> RetrieveProduct();
     }
 }
