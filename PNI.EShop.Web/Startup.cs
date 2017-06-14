@@ -38,6 +38,7 @@ namespace PNI.EShop.Web
             var sp = services.BuildServiceProvider();
             //configure dependency injection
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IAuditRepository, AuditRepository>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IAuditService, AuditService>();
             services.AddTransient<IProductCatalogService, ProductCatalogService>();

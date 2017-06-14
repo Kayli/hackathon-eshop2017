@@ -5,7 +5,24 @@
 }
 
 <h2>Audit</h2>
-@foreach (var audit in Model.AuditList)
+
+<table>
+    @foreach (var audit in Model.AuditList)
+    {
+        <tr>
+            <td style="padding-right: 30px;">@audit.Id</td>
+            <td style="padding-right: 30px;">@audit.EventName</td>
+            <td style="padding-right: 30px;">@audit.EventDetails</td>
+            <td style="padding-right: 30px;">@audit.EventDateTime.ToString()</td>
+        </tr>
+    }
+</table>
+
+@if (!Model.AuditList.Any())
 {
-    <p>@audit</p>
+    <p>No audit items found.</p>
 }
+<br/>
+<p>@Model.RetrievedTime.ToString()</p>
+
+@Html.ActionLink("Clear All", "Clear")

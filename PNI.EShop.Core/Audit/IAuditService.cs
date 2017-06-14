@@ -10,6 +10,8 @@ namespace PNI.EShop.Core.Audit
 {
     public interface IAuditService : IHandlesEvent<ProductCreated>
     {
-        IEnumerable<string> GetLatestAudits();
+        IEnumerable<Audit> GetLatestAudits(int count);
+
+        bool ClearAudits();
     }
 }
