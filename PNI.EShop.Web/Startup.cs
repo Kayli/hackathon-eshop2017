@@ -4,11 +4,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using PNI.EShop.Core;
 using PNI.EShop.Core.Order;
 using PNI.EShop.Core.Audit;
 using PNI.EShop.Infrastructure;
 using PNI.EShop.Infrastructure.EventStore;
+using PNI.EShop.Web.Services;
+using OrderService = PNI.EShop.Core.Order.OrderService;
+using PNI.EShop.Core.Services;
+using PNI.EShop.Core.ProductCatalog;
 
 namespace PNI.EShop.Web
 {
@@ -32,8 +37,10 @@ namespace PNI.EShop.Web
             var sp = services.BuildServiceProvider();
             //configure dependency injection
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IAuditRepository, AuditRepository>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IAuditService, AuditService>();
+            services.AddTransient<IProductCatalogService, ProductCatalogService>();
             services.AddSingleton<IEventStore>(new EventStore());
 
             // Add framework services.
@@ -70,6 +77,28 @@ namespace PNI.EShop.Web
 
             var eventStore = serviceProvider.GetService<IEventStore>();
             eventStore.Subscribe(() => serviceProvider.GetService<IOrderService>());
+            eventStore.Subscribe(() => serviceProvider.GetService<IProductCatalogService>());
+            eventStore.Subscribe(() => serviceProvider.GetService<IAuditService>());
+
+            var productCatalogService = serviceProvider.GetService<IProductCatalogService>();
+            productCatalogService.CreateProduct(
+                name: "red box", 
+                description: "a simple red box made of plastic", 
+                type: ModelTypeDefinition.Box, 
+                color: ColorDefinition.Red
+            );
+            productCatalogService.CreateProduct(
+                name: "black cylinder",
+                description: "a simple black cylinder made of plastic",
+                type: ModelTypeDefinition.Cylinder,
+                color: ColorDefinition.Black
+            );
+            productCatalogService.CreateProduct(
+                name: "white box",
+                description: "a simple white box made of plastic",
+                type: ModelTypeDefinition.Box,
+                color: ColorDefinition.White
+            );
         }
     }
 }

@@ -21,8 +21,6 @@ namespace PNI.EShop.Web.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            _eventStore.Publish(new TestEvent());
-
             return View();
         }
 
