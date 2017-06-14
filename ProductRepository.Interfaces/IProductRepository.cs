@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
-using PNI.EShop.Core.Product;
+using PNI.EShop.Core.ProductCatalog.DataAccess;
 
 namespace ProductRepository.Interfaces
 {
@@ -10,7 +11,7 @@ namespace ProductRepository.Interfaces
     /// </summary>
     public interface IProductRepository : IActor
     {
-        Task<Product[]> RetrieveAllProductsAsync();
-        Task<Product> ProductById(ProductId id);
+        Task<ProductDto[]> RetrieveAllProductsAsync();
+        Task<ProductDto> ProductById(Guid id);
     }
 }

@@ -2,7 +2,7 @@ using System;
 using PNI.EShop.Core._Common;
 using PNI.EShop.Core.Product;
 
-namespace PNI.EShop.Core.Services
+namespace PNI.EShop.Core.ProductCatalog
 {
     public class ProductCatalogService : IProductCatalogService
     {

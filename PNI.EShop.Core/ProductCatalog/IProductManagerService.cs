@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using PNI.EShop.Core.Product;
+using PNI.EShop.Core.ProductCatalog.Data;
 
-namespace PNI.EShop.Core.Services
+namespace PNI.EShop.Core.ProductCatalog
 {
     public interface IProductManagerService
     {
-        IEnumerable<Product.Product> RetrieveAllProducts();
-        Product.Product ProductById(ProductId id);
+        IEnumerable<Product> RetrieveAllProducts();
+        Product ProductById(ProductId id);
     }
 }

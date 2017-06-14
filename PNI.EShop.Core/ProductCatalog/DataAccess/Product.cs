@@ -1,7 +1,7 @@
 ﻿using System;
-using PNI.EShop.Core._Common;
+using PNI.EShop.Core.ProductCatalog.Data;
 
-namespace PNI.EShop.Core.Product
+namespace PNI.EShop.Core.ProductCatalog
 {
     public class Product : Entity<Guid>
     {

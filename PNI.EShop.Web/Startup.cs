@@ -8,7 +8,6 @@ using Microsoft.VisualStudio.Web.CodeGeneration;
 using PNI.EShop.Core;
 using PNI.EShop.Core.Order;
 using PNI.EShop.Core.Audit;
-using PNI.EShop.Core._Common;
 using PNI.EShop.Infrastructure;
 using PNI.EShop.Infrastructure.EventStore;
 using PNI.EShop.Web.Services;
