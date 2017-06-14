@@ -4,13 +4,7 @@ namespace PNI.EShop.Core._Common
 {
     public interface IEvent
     {
-        Guid            Id { get; }
-        DateTimeOffset  Published { get; }
-    }
-
-    public class TestEvent : IEvent
-    {
-        public Guid           Id { get; set; }
-        public DateTimeOffset Published { get; set; }
+        Guid           EventId { get; }
+        DateTimeOffset EventPublished { get; }
     }
 }
