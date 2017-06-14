@@ -4,6 +4,4 @@ namespace PNI.EShop.Core._Common
     {
         void Handle(TEvent @event);
     }
-
-    public interface IEventHandler { }
 }

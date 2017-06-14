@@ -67,6 +67,7 @@
     <Compile Include="_Common\Identity.cs" />
     <Compile Include="_Common\IEntity.cs" />
     <Compile Include="_Common\IEvent.cs" />
+    <Compile Include="_Common\IEventHandler.cs" />
     <Compile Include="_Common\IEventStore.cs" />
     <Compile Include="_Common\IHandlesEvent.cs" />
     <Compile Include="_Common\IIdentity.cs" />
