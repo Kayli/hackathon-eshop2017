@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Audit Clear";
+}
+
+<h2>Audit</h2>
+
+@if (Model == true)
+{
+    <p>All audit items cleared successfully.</p>
+    <p>Click @Html.ActionLink("here", "Index") to return.</p>
+}

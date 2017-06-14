@@ -9,3 +9,12 @@
 {
     <p>@audit</p>
 }
+
+@if (!Model.AuditList.Any())
+{
+    <p>No audit items found.</p>
+}
+
+
+
+@Html.ActionLink("Clear All", "Clear")

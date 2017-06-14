@@ -10,7 +10,8 @@ namespace PNI.EShop.Web.Controllers
 {
     public class AuditController : Controller
     {
-        private IAuditService _auditService;
+        private readonly IAuditService _auditService;
+        private const int _auditCount = 20;
 
         public AuditController(IAuditService auditService)
         {
@@ -19,8 +20,14 @@ namespace PNI.EShop.Web.Controllers
 
         public IActionResult Index()
         {
-            var auditList = _auditService.GetLatestAudits();
+            var auditList = _auditService.GetLatestAudits(_auditCount);
             return View(new AuditViewModel() { AuditList = auditList });
+        }
+
+        public IActionResult Clear()
+        {
+            var result = _auditService.ClearAudits();
+            return View(result);
         }
     }
 }

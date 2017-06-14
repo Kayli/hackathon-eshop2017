@@ -8,6 +8,8 @@ namespace PNI.EShop.Core.Audit
 {
     public interface IAuditService
     {
-        IEnumerable<string> GetLatestAudits();
+        IEnumerable<string> GetLatestAudits(int count);
+
+        bool ClearAudits();
     }
 }
