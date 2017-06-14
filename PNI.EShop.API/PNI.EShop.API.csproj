@@ -35,6 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj" />
     <ProjectReference Include="..\ProductRepository.Interfaces\ProductRepository.Interfaces.csproj" />
+    <ProjectReference Include="..\ProductRepository\ProductRepository.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ServiceFabric.Actors">
