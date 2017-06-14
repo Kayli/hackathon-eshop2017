@@ -13,6 +13,7 @@ using PNI.EShop.Infrastructure.EventStore;
 using PNI.EShop.Web.Services;
 using OrderService = PNI.EShop.Core.Order.OrderService;
 using PNI.EShop.Core.Services;
+using PNI.EShop.Core.ProductCatalog;
 
 namespace PNI.EShop.Web
 {

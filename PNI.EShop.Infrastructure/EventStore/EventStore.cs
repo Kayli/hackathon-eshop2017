@@ -5,6 +5,7 @@ using PNI.EShop.Core;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Linq;
+using PNI.EShop.Core._Common;
 
 namespace PNI.EShop.Infrastructure.EventStore
 {

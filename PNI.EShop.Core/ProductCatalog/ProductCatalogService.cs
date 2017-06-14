@@ -1,6 +1,5 @@
 using System;
-using PNI.EShop.Core._Common;
-using PNI.EShop.Core.Product;
+using PNI.EShop.Core.Services;
 
 namespace PNI.EShop.Core.ProductCatalog
 {

@@ -1,3 +1,4 @@
+using PNI.EShop.Core._Common;
 using System;
 
 namespace PNI.EShop.Core
