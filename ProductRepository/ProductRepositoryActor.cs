@@ -32,28 +32,27 @@ namespace ProductRepository
         public ProductRepositoryActor(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)
         {
-            StateManager.TryAddStateAsync("products", CreateProducts());
         }
         
         /// <summary>
         /// This method is called whenever an actor is activated.
         /// An actor is activated the first time any of its methods are invoked.
         /// </summary>
-        protected override Task OnActivateAsync()
+        protected override async Task OnActivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
 
-            // The StateManager is this actor's private state store.
-            // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
-            // Any serializable object can be saved in the StateManager.
-            // For more information, see https://aka.ms/servicefabricactorsstateserialization
+            var state = await StateManager.TryGetStateAsync<IEnumerable<Product>>("products");
 
-            return StateManager.TryAddStateAsync("count", 0);
+            if (!state.HasValue)
+            {
+                await StateManager.TryAddStateAsync("products", CreateProducts());
+            }
         }
 
-        public Task<Product[]> RetrieveAllProductsAsync()
+        public async Task<Product[]> RetrieveAllProductsAsync()
         {
-            return StateManager.GetStateAsync<Product[]>("products");
+            return await StateManager.GetStateAsync<Product[]>("products");
         }
 
         public async Task<Product> ProductById(ProductId id)

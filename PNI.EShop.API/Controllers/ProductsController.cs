@@ -8,51 +8,35 @@ using Microsoft.ServiceBus.Messaging;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
 using PNI.EShop.API.Models;
+using PNI.EShop.Core.Product;
 using PNI.EShop.Core.Services;
 using PNI.EShop.Core._Common;
 using ProductRepository.Interfaces;
 
 namespace PNI.EShop.API.Controllers
 {
-    [Serializable]
-    public class RequestAllDataMessage
-    {
-        public bool SendAllProducts => true;
-    }
-
     [Produces("application/json")]
     [Route("Products")]
     public class ProductsController : Controller
     {
-        private static readonly ActorId ActorId = ActorId.CreateRandom();
+        private static readonly ActorId ActorId = new ActorId("EShopProductRepsitory");
+        private static readonly Uri RepsitoryActorUrl = new Uri("fabric:/PNI.Services/ProductRepositoryActorService");
+        private readonly IProductRepositoryActor _productRepository;
+
+        public ProductsController()
+        {
+            _productRepository = ActorProxy.Create<IProductRepositoryActor>(ActorId, RepsitoryActorUrl);
+        }
 
         [HttpGet]
         [Route("")]
-        public async Task<ProductDto[]> Products()
+        public Task<ProductDto[]> Products()
         {
-            var client =
-                TopicClient.CreateFromConnectionString(
-                    ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"], "productrequests");
+            //var products = await _productRepository.RetrieveAllProductsAsync();
 
-            var message = new RequestAllDataMessage();
-            client.Send(new BrokeredMessage(message)
-            {
-                ContentType = message.GetType().ToString()
-            });
-            
-            var repo = ActorProxy.Create<IProductRepositoryActor>(ActorId, new Uri("fabric:/PNI.Services/ProductRepositoryActorService"));
+            //return products.Select(CreateProductDtoFromProduct).ToArray();
 
-            var products = await repo.RetrieveAllProductsAsync();
-
-            return products.Select(p => new ProductDto
-                                            {
-                                                Id = p.Id.Id,
-                                                Name = p.Name.ToString(),
-                                                Color = p.Model.Color.Color,
-                                                Type = p.Model.Type.ModelTypeDefinition,
-                                                CreatedAt = p.CreatedAt.Date,
-                                                UpdatedAt = p.ModifiedAt.Date
-                                            }).ToArray();
+            return Task.FromResult(CreateProducts().ToArray());
         }
 
         [HttpGet]
@@ -60,6 +44,19 @@ namespace PNI.EShop.API.Controllers
         public Task<ProductDto> Product(Guid id)
         {
             return Task.FromResult(CreateProducts().First(p => p.Id == id));
+        }
+
+        private static ProductDto CreateProductDtoFromProduct(Product proeduct)
+        {
+            return new ProductDto
+            {
+                Id = proeduct.Id.Id,
+                Name = proeduct.Name.ToString(),
+                Color = proeduct.Model.Color.Color,
+                Type = proeduct.Model.Type.ModelTypeDefinition,
+                CreatedAt = proeduct.CreatedAt.Date,
+                UpdatedAt = proeduct.ModifiedAt.Date
+            };
         }
 
         private static IEnumerable<ProductDto> CreateProducts()
