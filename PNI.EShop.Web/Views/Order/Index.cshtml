@@ -14,21 +14,25 @@
             @Html.TextBoxFor(m => m.Customer.FirstName)
             @Html.ValidationMessageFor(m => m.Customer.FirstName, "", new { @class = "text-danger" })
         </div>
+        <p></p>
         <div>
             Last Name:
             @Html.TextBoxFor(m => m.Customer.LastName)
             @Html.ValidationMessageFor(m => m.Customer.LastName, "", new { @class = "text-danger" })
-        </div>
+        </div> 
+        <p></p>
         <div>
             Address:
             @Html.TextBoxFor(m => m.Customer.Address)
             @Html.ValidationMessageFor(m => m.Customer.Address, "", new { @class = "text-danger" })
-        </div>
+        </div> 
+        <p></p>
         <div>
             Postal Code:
             @Html.TextBoxFor(m => m.Customer.PostalCode)
             @Html.ValidationMessageFor(m => m.Customer.PostalCode, "", new { @class = "text-danger" })
         </div>
+        <p></p>
         <input type="submit" value="Place Order" />
     </div>
 }
