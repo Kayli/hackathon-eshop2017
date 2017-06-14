@@ -5,6 +5,7 @@ using PNI.EShop.Core;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Linq;
+using PNI.EShop.Core._Common;
 
 namespace PNI.EShop.Infrastructure.EventStore
 {
@@ -18,7 +19,7 @@ namespace PNI.EShop.Infrastructure.EventStore
         {
             lock (_syncRoot)
             {
-                var res = _events.TryAdd(@event.Id, @event);
+                var res = _events.TryAdd(@event.EventId, @event);
                 if(!res) throw new Exception("Something went wrong while trying to add event to collection");
             }
 

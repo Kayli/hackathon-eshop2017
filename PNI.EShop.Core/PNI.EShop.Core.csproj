@@ -53,24 +53,29 @@
     <Compile Include="ProductCatalog\DataAccess\ProductDto.cs" />
     <Compile Include="ProductCatalog\Data\ColorValue.cs" />
     <Compile Include="ProductCatalog\Data\DateValue.cs" />
+    <Compile Include="ProductCatalog\IProductCatalogService.cs" />
     <Compile Include="ProductCatalog\ProductCatalogService.cs" />
     <Compile Include="ProductCatalog\Data\ProductModel.cs" />
     <Compile Include="ProductCatalog\Data\ModelType.cs" />
-    <Compile Include="ProductCatalog\Product.cs" />
+    <Compile Include="ProductCatalog\DataAccess\Product.cs" />
     <Compile Include="ProductCatalog\Data\ProductId.cs" />
     <Compile Include="ProductCatalog\Data\StringValue.cs" />
+    <Compile Include="ProductCatalog\Events\ProductCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProductCatalog\IProductManagerService.cs" />
     <Compile Include="_Common\ColorDefinition.cs" />
     <Compile Include="_Common\Entity.cs" />
     <Compile Include="_Common\EShopException.cs" />
+    <Compile Include="_Common\EventBase.cs" />
     <Compile Include="_Common\Identity.cs" />
     <Compile Include="_Common\IEntity.cs" />
     <Compile Include="_Common\IEvent.cs" />
+    <Compile Include="_Common\IEventHandler.cs" />
     <Compile Include="_Common\IEventStore.cs" />
     <Compile Include="_Common\IHandlesEvent.cs" />
     <Compile Include="_Common\IIdentity.cs" />
     <Compile Include="_Common\ModelTypeDefinition.cs" />
+    <Compile Include="_Common\TestEvent.cs" />
     <Compile Include="_Common\ValueObject.cs" />
   </ItemGroup>
   <ItemGroup />
