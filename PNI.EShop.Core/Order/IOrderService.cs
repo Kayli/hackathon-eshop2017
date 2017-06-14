@@ -3,7 +3,7 @@ using PNI.EShop.Core._Common;
 
 namespace PNI.EShop.Core.Order
 {
-    public interface IOrderService : IEventHandler, IHandlesEvent<ProductCreated>
+    public interface IOrderService : IHandlesEvent<ProductCreated>
     {
 
     }
