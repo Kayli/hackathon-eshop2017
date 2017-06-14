@@ -41,5 +41,8 @@
     <ProjectReference Include="..\PNI.EShop.Core\PNI.EShop.Core.csproj" />
     <ProjectReference Include="..\PNI.EShop.Infrastructure\PNI.EShop.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Order\" />
+  </ItemGroup>
 
 </Project>
