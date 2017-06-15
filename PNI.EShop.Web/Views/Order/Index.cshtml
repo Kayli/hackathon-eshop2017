@@ -5,7 +5,7 @@
 @model PNI.EShop.Web.Models.OrderViewModel
 
  
-@using(Html.BeginForm("Create", "Order", FormMethod.Post, new {}))
+@using (Html.BeginForm(actionName: "Create", controllerName: "Order", method: FormMethod.Post, routeValues: new { productId = Model.ProductId }))
 {
 
     <div class="form-group">

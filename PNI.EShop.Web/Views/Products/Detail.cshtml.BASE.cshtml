@@ -1,0 +1,34 @@
+﻿@model PNI.EShop.Web.Models.ProductViewModel
+
+@{
+    ViewBag.Title = "Product " + Model.Name;
+    Layout = "_Layout";
+}
+
+<h2>@Model.Name</h2>
+
+<div >
+    <iframe src="/product-viewer/index.html" style="width: 430px; height: 320px; border: 0px;"></iframe>
+</div>
+<table>
+    <tr>
+        <th style="width: 100px">Name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Color</th>
+        <td>@Model.Color</td>
+    </tr>
+    <tr>
+        <th>Type</th>
+        <td>@Model.Type</td>
+    </tr>
+    <tr>
+        <th>Price</th>
+        <td>$9.99</td>
+    </tr>
+</table>

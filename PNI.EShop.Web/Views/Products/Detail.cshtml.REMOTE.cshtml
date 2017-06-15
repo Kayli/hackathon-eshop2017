@@ -8,15 +8,7 @@
 <h2>@Model.Name</h2>
 
 <div>
-    <iframe id="product-viewer" src="/product-viewer/index.html" style="width: 430px; height: 320px; border: 0px;"></iframe>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function (event) {
-            prodFrame = document.getElementById('product-viewer');
-            prodFrame.onload = function() {
-                prodFrame.contentWindow.productColor = '@Model.Color.ToString().ToLower()';
-            };
-        });
-    </script>
+    <iframe src="/product-viewer/index.html" style="width: 430px; height: 320px; border: 0px;"></iframe>
 </div>
 <table>
     <tr>
