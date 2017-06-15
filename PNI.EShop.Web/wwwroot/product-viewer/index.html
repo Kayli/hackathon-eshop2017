@@ -2,11 +2,16 @@
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
     <title>Unity WebGL Player | PNI.EShop.ProductViewer</title>
     <script src="Build/UnityLoader.js"></script>
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/product-viewer.json");
+	  var productColor = "red";
+	  function OnUnityLoaded()
+	  {
+		gameInstance.SendMessage("Main Camera", "ShowProduct", "{\"shape\" : \"box\", \"color\" : \"" + productColor + "\"}");
+	  }
     </script>
   </head>
   <body>
