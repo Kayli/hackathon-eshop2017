@@ -18,7 +18,7 @@ namespace PNI.EShop.Infrastructure.Services
             _eventStore = eventStore;
         }
 
-        public void CreateProduct(string name, string description, ModelTypeDefinition type, ColorDefinition color)
+        public void CreateProduct(string name, string description, ModelTypeDefinition type, ColorDefinition color, decimal price)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new EShopException("name can't be empty or whitespace");
 
@@ -28,7 +28,8 @@ namespace PNI.EShop.Infrastructure.Services
                 Name = name,
                 Description = description,
                 Type = type,
-                Color = color
+                Color = color,
+                Price = price
             });
         }
 

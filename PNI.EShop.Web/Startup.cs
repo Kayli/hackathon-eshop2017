@@ -90,19 +90,22 @@ namespace PNI.EShop.Web
                 name: "red box", 
                 description: "a simple red box made of plastic", 
                 type: ModelTypeDefinition.Box, 
-                color: ColorDefinition.Red
+                color: ColorDefinition.Red,
+                price: 9.00m
             );
             productCatalogService.CreateProduct(
                 name: "black cylinder",
                 description: "a simple black cylinder made of plastic",
                 type: ModelTypeDefinition.Cylinder,
-                color: ColorDefinition.Black
+                color: ColorDefinition.Black,
+                price: 5.47m
             );
             productCatalogService.CreateProduct(
                 name: "white box",
                 description: "a simple white box made of plastic",
                 type: ModelTypeDefinition.Box,
-                color: ColorDefinition.White
+                color: ColorDefinition.White,
+                price: 9.5m
             );
         }
     }

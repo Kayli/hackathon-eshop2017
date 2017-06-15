@@ -10,5 +10,6 @@ namespace PNI.EShop.Core.Services
         public string              Description { get; set; }
         public ModelTypeDefinition Type { get; set; }
         public ColorDefinition     Color { get; set; }
+        public decimal             Price { get; set; }
     }
 }

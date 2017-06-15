@@ -18,6 +18,7 @@ namespace PNI.EShop.Core.Order.DataAccess
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
     }
 
     public interface IFactory<T>

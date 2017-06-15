@@ -1,3 +1,4 @@
+using System;
 using PNI.EShop.Core.Order.DataAccess;
 
 namespace PNI.EShop.Core.Order
@@ -6,5 +7,6 @@ namespace PNI.EShop.Core.Order
     {
         void SaveProduct(Product product);
         void SaveOrder(DataAccess.Order order);
+        Product GetProduct(Guid productId);
     }
 }

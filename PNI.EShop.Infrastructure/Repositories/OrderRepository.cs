@@ -2,6 +2,8 @@
 using System.Data.Entity;
 using FakeDbSet;
 using PNI.EShop.Core.Order.DataAccess;
+using System;
+using System.Linq;
 
 namespace PNI.EShop.Infrastructure
 {
@@ -26,6 +28,11 @@ namespace PNI.EShop.Infrastructure
         public void SaveProduct(Product product)
         {
             Products.Add(product);
+        }
+
+        public Product GetProduct(Guid productId)
+        {
+            return Products.Single(x => x.Id == productId);
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PNI.EShop.Core.Order.Events;
 using PNI.EShop.Core.Services;
 
 namespace PNI.EShop.Core.Audit
@@ -41,11 +42,23 @@ namespace PNI.EShop.Core.Audit
             });
         }
 
+
         public void Handle(AuditCleared @event)
         {
             _auditRepository.Add(new Audit() {
                 Id = @event.EventId.ToString(),
                 Name = @event.GetType().ToString(),
+                CreatedTime = @event.EventPublished.UtcDateTime
+            });
+        }
+
+        public void Handle(OrderCreated @event)
+        {
+            _auditRepository.Add(new Audit()
+            {
+                Id = @event.EventId.ToString(),
+                Name = @event.GetType().ToString(),
+                Details = @event.ProductName + " - " + @event.Price,
                 CreatedTime = @event.EventPublished.UtcDateTime
             });
         }

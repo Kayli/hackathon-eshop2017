@@ -8,6 +8,7 @@ namespace PNI.EShop.Core.Order.Events
         public long OrderId { get; set; }
         public Guid ProductId { get; set; }
         public Customer Customer { get; set; }
-
+        public string ProductName { get; set; }
+        public decimal Price { get; set; }
     }
 }

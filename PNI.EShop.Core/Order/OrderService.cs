@@ -20,7 +20,8 @@ namespace PNI.EShop.Core.Order
             Product product = new Product()
             {
                 Id = @event.Id,
-                Name = @event.Name
+                Name = @event.Name,
+                Price = @event.Price
             };
             _orderRepository.SaveProduct(product);
         }
@@ -38,12 +39,14 @@ namespace PNI.EShop.Core.Order
 
         public void CreateOrder(Guid productId, Customer customer)
         {
-
+            var product = _orderRepository.GetProduct(productId);
             _eventStore.Publish(new OrderCreated
             {
                // OrderId = orderId,
                 ProductId = productId,
-                Customer = customer
+                Customer = customer,
+                ProductName = product.Name,
+                Price = product.Price
             });
         }
     }
