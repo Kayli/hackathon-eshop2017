@@ -15,14 +15,20 @@ namespace PNI.EShop.Web.Controllers
             _orderService = orderService;
         }
 
-        // GET: Order
-        public ActionResult Index()
+   
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(Guid productId)
         {
-            if(_tempOrderViewModel != null)
+            if (_tempOrderViewModel == null)
             {
-                return View(_tempOrderViewModel);
+                OrderViewModel orderViewModel = new OrderViewModel()
+                {
+                    ProductId = productId
+                };
+                _tempOrderViewModel = orderViewModel;
             }
-            return View();
+            return View(_tempOrderViewModel);
         }
 
         // GET: Order/Confirmation
@@ -41,16 +47,15 @@ namespace PNI.EShop.Web.Controllers
         // POST: Order/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(OrderViewModel orderViewModel)
+        public ActionResult Create(OrderViewModel orderViewModel, Guid productId)
         {
-            _tempOrderViewModel = orderViewModel;
             try
             {
                 if (!ModelState.IsValid)
                 {
                     return View("Index", orderViewModel);
                 }
-
+                orderViewModel.ProductId = productId;
                 _orderService.CreateOrder(orderViewModel.ProductId, orderViewModel.Customer);
                 orderViewModel.OrderStatus = OrderStatus.OrderPlaced;
                 return RedirectToAction("Confirmation", "Order", orderViewModel);
