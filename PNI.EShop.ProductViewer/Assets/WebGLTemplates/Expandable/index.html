@@ -7,10 +7,11 @@
     <script src="Build/UnityLoader.js"></script>
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/product-viewer.json");
-	  var productColor = "red";
+	  var productColor = (productColor === undefined) ? "red" : productColor;
+	  var productShape = (productShape === undefined) ? "box" : productShape;
 	  function OnUnityLoaded()
 	  {
-		gameInstance.SendMessage("Main Camera", "ShowProduct", "{\"shape\" : \"box\", \"color\" : \"" + productColor + "\"}");
+		gameInstance.SendMessage("Main Camera", "ShowProduct", "{\"shape\" : \"" + productShape + "\", \"color\" : \"" + productColor + "\"}");
 	  }
     </script>
   </head>

@@ -12,9 +12,10 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function (event) {
             prodFrame = document.getElementById('product-viewer');
-            prodFrame.onload = function() {
+            //prodFrame.onload = function () {
                 prodFrame.contentWindow.productColor = '@Model.Color.ToString().ToLower()';
-            };
+                prodFrame.contentWindow.productShape = '@Model.Type.ToString().ToLower()';
+            //};
         });
     </script>
 </div>

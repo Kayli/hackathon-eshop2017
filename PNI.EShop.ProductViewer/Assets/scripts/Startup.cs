@@ -5,31 +5,23 @@ using UnityEngine;
 
 public class Startup : MonoBehaviour
 {
-    private Rigidbody _product;
     private Rigidbody _ground;
 
     // Use this for initialization
     void Start () {
-        _product = GameObject.Find("product").GetComponent<Rigidbody>();
         _ground = GameObject.Find("ground").GetComponent<Rigidbody>();
 
-        
-
-        _product.GetComponent<MeshRenderer>().enabled = false;
         Application.ExternalCall("OnUnityLoaded");
+        //ShowProduct("{\"shape\" : \"cylinder\", \"color\" : \"red\"}");
     }
 	
 	  // Update is called once per frame
-	  void Update ()
-	  {
-        var speed = 30;
-        //_ground.gameObject.transform.Rotate(Vector3.up, speed * Time.deltaTime);
-    }
+	  void Update () { }
 
     public void ShowProduct(string json)
     {
         var productParameters = JsonUtility.FromJson<ProductParameters>(json);
-        var renderer = _product.GetComponent<Renderer>();
+        
         var productColor = Color.red;
         var productShape = PrimitiveType.Cylinder;
         switch (productParameters.color)
@@ -44,13 +36,34 @@ public class Startup : MonoBehaviour
             productColor = Color.white;
             break;
         }
-        renderer.material = new Material(Shader.Find("Standard")) { color = productColor };
 
+        switch (productParameters.shape)
+        {
+            case "box":
+                productShape = PrimitiveType.Cube;
+                break;
+            case "cylinder":
+                productShape = PrimitiveType.Cylinder;
+                break;
+            case "sphere":
+                productShape = PrimitiveType.Sphere;
+                break;
+        }
+
+        var gameObject = GameObject.CreatePrimitive(productShape);
+        gameObject.name = name;
+        gameObject.transform.position = new Vector3(0.51f, 1.96f, -0.1f); 
+        var renderer = gameObject.GetComponent<Renderer>();
+        renderer.material = new Material(Shader.Find("Standard")) { color = productColor };
+        var rigidbody = gameObject.AddComponent<Rigidbody>();
+        if (productShape == PrimitiveType.Cylinder)
+        {
+            Destroy(gameObject.GetComponent<CapsuleCollider>());
+            gameObject.AddComponent<BoxCollider>();
+        }
+        
         //spin ground around Y axis, so that we can see object from different angles
         _ground.AddTorque(Vector3.up * 30f, ForceMode.Acceleration);
-
-        //show product
-        _product.GetComponent<MeshRenderer>().enabled = true;
     }
 }
 
