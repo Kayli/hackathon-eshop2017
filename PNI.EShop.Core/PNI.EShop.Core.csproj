@@ -30,9 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeDbSet, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeDbSet.1.4.0.0\lib\net40\FakeDbSet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,10 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audit\Audit.cs" />
+    <Compile Include="Audit\AuditEvents.cs" />
     <Compile Include="Audit\AuditService.cs" />
     <Compile Include="Audit\IAuditRepository.cs" />
     <Compile Include="Audit\IAuditService.cs" />
     <Compile Include="Order\Customer.cs" />
+    <Compile Include="Order\DataAccess\OrderDatabase.cs" />
+    <Compile Include="Order\Events\OrderCreated.cs" />
     <Compile Include="Order\IOrderRepository.cs" />
     <Compile Include="Order\IOrderService.cs" />
     <Compile Include="Order\OrderService.cs" />
@@ -80,5 +90,8 @@
     <Compile Include="_Common\ValueObject.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

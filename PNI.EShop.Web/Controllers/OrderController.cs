@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using PNI.EShop.Web.Models;
 using System;
+using PNI.EShop.Core.Order;
 
 namespace PNI.EShop.Web.Controllers
 {
     public class OrderController : Controller
     {
         private static OrderViewModel _tempOrderViewModel;
+        private IOrderService _orderService;
+
+        public OrderController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
+
         // GET: Order
         public ActionResult Index()
         {
@@ -42,8 +50,9 @@ namespace PNI.EShop.Web.Controllers
                 {
                     return View("Index", orderViewModel);
                 }
-                
-                orderViewModel.OrderStatus = Core.Order.OrderStatus.OrderPlaced;
+
+                _orderService.CreateOrder(orderViewModel.ProductId, orderViewModel.Customer);
+                orderViewModel.OrderStatus = OrderStatus.OrderPlaced;
                 return RedirectToAction("Confirmation", "Order", orderViewModel);
             }
             catch(Exception ex)
