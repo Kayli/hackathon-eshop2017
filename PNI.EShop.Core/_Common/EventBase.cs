@@ -7,6 +7,7 @@ namespace PNI.EShop.Core._Common
         public EventBase()
         {
             EventId = Guid.NewGuid();
+            EventPublished = DateTimeOffset.Now;
         }
 
         public Guid            EventId { get; set; }

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audit\Audit.cs" />
+    <Compile Include="Audit\AuditEvents.cs" />
     <Compile Include="Audit\AuditService.cs" />
     <Compile Include="Audit\IAuditRepository.cs" />
     <Compile Include="Audit\IAuditService.cs" />

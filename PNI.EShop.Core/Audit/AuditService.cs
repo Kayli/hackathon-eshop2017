@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using PNI.EShop.Core.Services;
-using PNI.EShop.Core._Common;
-
 
 namespace PNI.EShop.Core.Audit
 {
@@ -15,7 +12,6 @@ namespace PNI.EShop.Core.Audit
         public AuditService(IAuditRepository auditRepository, IEventStore eventStore)
         {
             _auditRepository = auditRepository;
-            // TODO subscribe to all events
             _eventStore = eventStore;
         }
 
@@ -26,13 +22,32 @@ namespace PNI.EShop.Core.Audit
 
         public bool ClearAudits()
         {
-            // TODO publish delete event
-            return _auditRepository.DeleteAll();
+            var clearResult = _auditRepository.DeleteAll();
+            if (clearResult) {
+                _eventStore.Publish(new AuditCleared() {
+                    EventPublished = DateTimeOffset.Now
+                });
+            }
+            return clearResult;
         }
 
         public void Handle(ProductCreated @event)
         {
-            //create an audit record
+            _auditRepository.Add(new Audit() {
+                Id = @event.EventId.ToString(),
+                Name = @event.GetType().ToString(),
+                Details = @event.Name,
+                CreatedTime = @event.EventPublished.UtcDateTime
+            });
+        }
+
+        public void Handle(AuditCleared @event)
+        {
+            _auditRepository.Add(new Audit() {
+                Id = @event.EventId.ToString(),
+                Name = @event.GetType().ToString(),
+                CreatedTime = @event.EventPublished.UtcDateTime
+            });
         }
     }
 }
